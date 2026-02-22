@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-
+import { useCart } from "../context/CartContext";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -8,7 +8,7 @@ function ProductDetails() {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const { addToCart } = useCart();
 
   useEffect(() => {
     fetch(`${BASEURL}/api/products/${id}/`)
@@ -79,7 +79,6 @@ function ProductDetails() {
       </div>
     </div>
   );
-  
 }
 
 export default ProductDetails;
