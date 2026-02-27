@@ -4,9 +4,10 @@ import { getAccessToken, clearTokens } from "../utils/auth";
 import { useState, useRef, useEffect } from "react";
 
 function Navbar() {
-  const { cartItems } = useCart();
+  
+  const { cartItems, refreshCartAuth, token } = useCart();
   const navigate = useNavigate();
-  const token = getAccessToken();
+  // const token = getAccessToken();
 
   const [showMenu, setShowMenu] = useState(false);
   const [search, setSearch] = useState("");
@@ -18,10 +19,11 @@ function Navbar() {
     0
   );
 
-  const handleLogout = () => {
-    clearTokens();
-    navigate("/login");
-  };
+ const handleLogout = () => {
+  clearTokens();        // ✅ use utility
+  refreshCartAuth();    // ✅ update CartContext state
+  navigate("/login");
+};
 
   useEffect(() => {
     const handleClickOutside = (event) => {

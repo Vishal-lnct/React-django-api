@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import ProductCard from "../components/ProductCard.jsx";
+import ProductCard from "../components/ProductCard";
 
 function ProductList() {
     const [products, setProducts] = useState([]);
