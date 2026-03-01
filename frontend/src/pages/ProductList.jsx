@@ -8,37 +8,58 @@ function ProductList() {
     const [error, setError] = useState(null);
 
     const location = useLocation();
+
+    // ✅ READ URL PARAMETERS
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
+    const category = params.get("category");
 
     const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
 
     useEffect(() => {
-    setLoading(true);
-    setError(null);
+        setLoading(true);
+        setError(null);
 
-    let url = `${BASEURL}/api/products/`;
+        // =====================
+        // BUILD API URL
+        // =====================
+        let url = `${BASEURL}/api/products/`;
+        const queryParams = [];
 
-    if (search && search.trim() !== "") {
-        url += `?search=${search}`;
-    }
+        if (search && search.trim() !== "") {
+            queryParams.push(`search=${search}`);
+        }
 
-    fetch(url)
-        .then(res => {
-            if (!res.ok) throw new Error("Failed to fetch products");
-            return res.json();
-        })
-        .then(data => {
-            setProducts(data);
-            setLoading(false);
-        })
-        .catch(err => {
-            setError(err.message);
-            setLoading(false);
-        });
+        if (category && category.trim() !== "") {
+            queryParams.push(`category=${category}`);
+        }
 
-}, [search]);// 🔥 important dependency
+        if (queryParams.length > 0) {
+            url += `?${queryParams.join("&")}`;
+        }
 
+        // =====================
+        // FETCH PRODUCTS
+        // =====================
+        fetch(url)
+            .then(res => {
+                if (!res.ok) throw new Error("Failed to fetch products");
+                return res.json();
+            })
+            .then(data => {
+                setProducts(data);
+                setLoading(false);
+            })
+            .catch(err => {
+                setError(err.message);
+                setLoading(false);
+            });
+
+    }, [search, category]); // ✅ VERY IMPORTANT
+
+    // =====================
+    // LOADING STATE
+    // =====================
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center text-lg font-medium">
@@ -47,6 +68,9 @@ function ProductList() {
         );
     }
 
+    // =====================
+    // ERROR STATE
+    // =====================
     if (error) {
         return (
             <div className="min-h-screen flex items-center justify-center text-red-500">
@@ -55,10 +79,21 @@ function ProductList() {
         );
     }
 
+    // =====================
+    // PAGE TITLE
+    // =====================
+    let title = "Product List";
+
+    if (search) {
+        title = `Search Results for "${search}"`;
+    } else if (category) {
+        title = `${category.toUpperCase()} Products`;
+    }
+
     return (
         <div className="min-h-screen bg-gray-100">
             <h1 className="text-3xl font-bold text-center py-5 bg-white shadow-md">
-                {search ? `Search Results for "${search}"` : "Product List"}
+                {title}
             </h1>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 p-6">

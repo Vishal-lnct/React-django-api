@@ -1,5 +1,7 @@
 from django.urls import path
 from . import views
+from .views import get_orders
+from .views import cancel_order
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -16,6 +18,9 @@ urlpatterns = [
     # CATEGORIES
     path('categories/', views.get_categories),
 
+    #order cancel
+    path("orders/<int:order_id>/cancel/", cancel_order),
+
     # CART
     path('cart/', views.get_cart),
     path('cart/add/', views.add_to_cart),
@@ -24,4 +29,7 @@ urlpatterns = [
 
     # ORDER
     path('orders/create/', views.create_order),
+
+#my order me dikhane ke lie
+    path('orders/', get_orders),
 ]

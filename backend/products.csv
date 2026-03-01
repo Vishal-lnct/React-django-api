@@ -1,0 +1,87 @@
+name,price,description,image,category
+Leather Belt,1299,Genuine leather belt,https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=400,Accessories
+Classic Sunglasses,1899,UV protection sunglasses,https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=400,Accessories
+Silver Bracelet,2499,Stylish bracelet,https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400,Accessories
+Travel Backpack,3499,Waterproof backpack,https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400,Accessories
+Analog Watch,2199,Classic analog watch,https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=400,Accessories
+Baseball Cap,899,Casual cap,https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400,Accessories
+Formal Tie,799,Office wear tie,https://images.unsplash.com/photo-1598032895397-b9472444bf93?w=400,Accessories
+Wallet Organizer,1599,Multi pocket wallet,https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400,Accessories
+Key Holder,499,Metal key holder,https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400,Accessories
+Duffel Bag,3999,Gym travel bag,https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?w=400,Accessories
+
+Graphic T-Shirt,1499,Printed tshirt,https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=400,Clothing
+Oversized Hoodie,2299,Comfort hoodie,https://images.unsplash.com/photo-1544441893-675973e31985?w=400,Clothing
+Slim Fit Shirt,1999,Cotton shirt,https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400,Clothing
+Cargo Pants,2499,Outdoor pants,https://images.unsplash.com/photo-1584865288642-42078afe6942?w=400,Clothing
+Joggers,1799,Sports joggers,https://images.unsplash.com/photo-1520975916090-3105956dac38?w=400,Clothing
+Winter Jacket,4599,Warm jacket,https://images.unsplash.com/photo-1542060748-10c28b62716a?w=400,Clothing
+Polo T-Shirt,1599,Polo cotton tshirt,https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400,Clothing
+Denim Jacket,3999,Blue denim jacket,https://images.unsplash.com/photo-1551028719-00167b16eac5?w=400,Clothing
+Track Suit,3299,Sports tracksuit,https://images.unsplash.com/photo-1593032465171-8f8c1d5d4df1?w=400,Clothing
+Formal Blazer,5499,Office blazer,https://images.unsplash.com/photo-1592878904946-b3cd8ae243d0?w=400,Clothing
+
+Running Sneakers,3999,Lightweight shoes,https://images.unsplash.com/photo-1519744346363-d2d48c6b3d7c?w=400,Shoes
+Basketball Shoes,4999,High ankle shoes,https://images.unsplash.com/photo-1600185365483-26d7a4cc7519?w=400,Shoes
+Casual Sneakers,2799,Daily wear sneakers,https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400,Shoes
+Leather Boots,5999,Premium boots,https://images.unsplash.com/photo-1520637836862-4d197d17c86a?w=400,Shoes
+Slip-On Shoes,1999,Comfort slip-ons,https://images.unsplash.com/photo-1528701800489-20be3c3fdf8a?w=400,Shoes
+Training Shoes,3299,Gym shoes,https://images.unsplash.com/photo-1514986888952-8cd320577b68?w=400,Shoes
+Canvas Shoes,1799,Classic canvas shoes,https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=400,Shoes
+Hiking Boots,6499,Outdoor boots,https://images.unsplash.com/photo-1505842465776-3d90f6163102?w=400,Shoes
+Sports Sandals,1499,Outdoor sandals,https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400,Shoes
+Running Trainers,3699,Training sneakers,https://images.unsplash.com/photo-1600180758890-6b94519a8ba6?w=400,Shoes
+
+Wireless Earbuds,2999,Bluetooth earbuds,https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400,Electronics
+Mechanical Keyboard,5999,RGB keyboard,https://images.unsplash.com/photo-1517336714731-489689fd1ca8?w=400,Electronics
+4K Monitor,14999,Ultra HD display,https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?w=400,Electronics
+Laptop Stand,1999,Aluminum stand,https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400,Electronics
+Bluetooth Speaker,3499,Portable speaker,https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400,Electronics
+Smartphone Tripod,1299,Camera tripod,https://images.unsplash.com/photo-1519183071298-a2962eadc9f4?w=400,Electronics
+USB Hub,899,Multiport hub,https://images.unsplash.com/photo-1587202372634-32705e3bf49c?w=400,Electronics
+Webcam HD,2499,Streaming webcam,https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=400,Electronics
+Gaming Headset,3999,Surround sound headset,https://images.unsplash.com/photo-1599669454699-248893623440?w=400,Electronics
+Wireless Charger,1499,Fast charger pad,https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400,Electronics
+Smart Watch,6999,Fitness tracking smartwatch,https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=400,Electronics
+Noise Cancelling Headphones,8999,Over ear headphones,https://images.unsplash.com/photo-1518444065439-e933c06ce9cd?w=400,Electronics
+Portable SSD,7999,High speed storage,https://images.unsplash.com/photo-1593642634367-d91a135587b5?w=400,Electronics
+Gaming Mouse,2499,RGB gaming mouse,https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=400,Electronics
+LED Desk Lamp,1599,Adjustable desk lamp,https://images.unsplash.com/photo-1507473885765-e6ed057f782c?w=400,Electronics
+Power Bank,1999,10000mAh battery pack,https://images.unsplash.com/photo-1580910051074-3eb694886505?w=400,Electronics
+Action Camera,10999,4K sports camera,https://images.unsplash.com/photo-1502920917128-1aa500764b94?w=400,Electronics
+VR Headset,12999,Virtual reality headset,https://images.unsplash.com/photo-1593508512255-86ab42a8e620?w=400,Electronics
+Wireless Mouse,1299,Ergonomic mouse,https://images.unsplash.com/photo-1527864550417-7fd91fc51a46?w=400,Electronics
+Tablet Stand,999,Adjustable tablet holder,https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=400,Electronics
+
+Cotton Kurta,1899,Traditional wear kurta,https://images.unsplash.com/photo-1593030761757-71fae45fa0e7?w=400,Clothing
+Printed Hoodie,2399,Street style hoodie,https://images.unsplash.com/photo-1520975916090-3105956dac38?w=400,Clothing
+Linen Shirt,2199,Breathable linen shirt,https://images.unsplash.com/photo-1603252109303-2751441dd157?w=400,Clothing
+Chinos Pants,2299,Smart casual chinos,https://images.unsplash.com/photo-1584865288642-42078afe6942?w=400,Clothing
+Sports Shorts,1299,Gym shorts,https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=400,Clothing
+Denim Jeans,2799,Slim denim jeans,https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=400,Clothing
+Wool Sweater,3199,Winter sweater,https://images.unsplash.com/photo-1544441893-675973e31985?w=400,Clothing
+Casual Shirt,1699,Daily wear shirt,https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=400,Clothing
+Track Pants,1599,Sports track pants,https://images.unsplash.com/photo-1520975916090-3105956dac38?w=400,Clothing
+Rain Jacket,3499,Water resistant jacket,https://images.unsplash.com/photo-1542060748-10c28b62716a?w=400,Clothing
+
+Formal Shoes,4499,Office leather shoes,https://images.unsplash.com/photo-1528701800489-20be3c3fdf8a?w=400,Shoes
+Loafers,3299,Comfort loafers,https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400,Shoes
+Running Shoes Pro,4599,Advanced running shoes,https://images.unsplash.com/photo-1519744346363-d2d48c6b3d7c?w=400,Shoes
+Walking Shoes,2499,Comfort walking shoes,https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400,Shoes
+Football Boots,5299,Studded football shoes,https://images.unsplash.com/photo-1520637836862-4d197d17c86a?w=400,Shoes
+Flip Flops,799,Beach flip flops,https://images.unsplash.com/photo-1608256246200-53e635b5b65f?w=400,Shoes
+Office Heels,3999,Formal heels,https://images.unsplash.com/photo-1528701800489-20be3c3fdf8a?w=400,Shoes
+Kids Sneakers,1999,Children sneakers,https://images.unsplash.com/photo-1523381294911-8d3cead13475?w=400,Shoes
+Trail Running Shoes,4799,Outdoor running shoes,https://images.unsplash.com/photo-1505842465776-3d90f6163102?w=400,Shoes
+Luxury Boots,7999,Premium leather boots,https://images.unsplash.com/photo-1520637836862-4d197d17c86a?w=400,Shoes
+
+Travel Wallet,1299,Passport wallet,https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400,Accessories
+Leather Gloves,1999,Winter gloves,https://images.unsplash.com/photo-1603569283847-aa295f0d016a?w=400,Accessories
+Beanie Cap,699,Wool beanie cap,https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400,Accessories
+Laptop Backpack,3999,Office backpack,https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=400,Accessories
+Gym Bag,2599,Fitness duffel bag,https://images.unsplash.com/photo-1598970434795-0c54fe7c0642?w=400,Accessories
+Sling Bag,1899,Casual sling bag,https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400,Accessories
+Card Holder,799,Minimal card holder,https://images.unsplash.com/photo-1584917865442-de89df76afd3?w=400,Accessories
+Luxury Watch,9999,Premium wrist watch,https://images.unsplash.com/photo-1508057198894-247b23fe5ade?w=400,Accessories
+Sports Cap,999,Outdoor cap,https://images.unsplash.com/photo-1521369909029-2afed882baee?w=400,Accessories
+Travel Organizer,1499,Cable organizer pouch,https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=400,Accessories
