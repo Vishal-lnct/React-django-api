@@ -5,8 +5,10 @@ from .models import (
     Cart,
     CartItem,
     Order,
-    OrderItem
+    OrderItem,
+    Address
 )
+
 from django.contrib.auth.models import User
 
 
@@ -122,3 +124,9 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = "__all__"
+
+
+class AddressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Address
+        fields = '__all__'        

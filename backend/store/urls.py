@@ -2,6 +2,7 @@ from django.urls import path
 from . import views
 from .views import get_orders
 from .views import cancel_order
+from .views import AddressListCreateView
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -32,4 +33,6 @@ urlpatterns = [
 
 #my order me dikhane ke lie
     path('orders/', get_orders),
+
+      path('addresses/', AddressListCreateView.as_view()),
 ]

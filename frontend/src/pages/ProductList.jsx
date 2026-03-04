@@ -9,7 +9,7 @@ function ProductList() {
 
     const location = useLocation();
 
-    // ✅ READ URL PARAMETERS
+    // READ URL PARAMETERS
     const params = new URLSearchParams(location.search);
     const search = params.get("search");
     const category = params.get("category");
@@ -20,9 +20,6 @@ function ProductList() {
         setLoading(true);
         setError(null);
 
-        // =====================
-        // BUILD API URL
-        // =====================
         let url = `${BASEURL}/api/products/`;
         const queryParams = [];
 
@@ -38,9 +35,6 @@ function ProductList() {
             url += `?${queryParams.join("&")}`;
         }
 
-        // =====================
-        // FETCH PRODUCTS
-        // =====================
         fetch(url)
             .then(res => {
                 if (!res.ok) throw new Error("Failed to fetch products");
@@ -55,33 +49,24 @@ function ProductList() {
                 setLoading(false);
             });
 
-    }, [search, category]); // ✅ VERY IMPORTANT
+    }, [search, category]);
 
-    // =====================
-    // LOADING STATE
-    // =====================
     if (loading) {
         return (
-            <div className="min-h-screen flex items-center justify-center text-lg font-medium">
+            <div className="pt-24 min-h-screen flex items-center justify-center text-lg font-medium">
                 Loading products...
             </div>
         );
     }
 
-    // =====================
-    // ERROR STATE
-    // =====================
     if (error) {
         return (
-            <div className="min-h-screen flex items-center justify-center text-red-500">
+            <div className="pt-24 min-h-screen flex items-center justify-center text-red-500">
                 Error: {error}
             </div>
         );
     }
 
-    // =====================
-    // PAGE TITLE
-    // =====================
     let title = "Product List";
 
     if (search) {
@@ -91,7 +76,8 @@ function ProductList() {
     }
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="pt-24 min-h-screen bg-gray-100">
+
             <h1 className="text-3xl font-bold text-center py-5 bg-white shadow-md">
                 {title}
             </h1>
@@ -107,6 +93,7 @@ function ProductList() {
                     </p>
                 )}
             </div>
+
         </div>
     );
 }

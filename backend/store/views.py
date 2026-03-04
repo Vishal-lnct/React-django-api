@@ -2,11 +2,12 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
+from rest_framework import generics
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
-from .models import Product, Category, Cart, CartItem, Order, OrderItem
+from .models import Product, Category, Cart, CartItem, Order, OrderItem,Address
 from .serializers import (
     RegisterSerializer,
     UserSerializer,
@@ -14,7 +15,9 @@ from .serializers import (
     CategorySerializer,
     CartSerializer,
     CartItemSerializer,
-    OrderSerializer
+    OrderSerializer,
+     AddressSerializer
+
 )
 
 
@@ -261,3 +264,15 @@ def cancel_order(request, order_id):
     order.save()
 
     return Response({"message": "Order cancelled successfully"})
+
+
+
+class AddressListCreateView(generics.ListCreateAPIView):
+    serializer_class = AddressSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Address.objects.filter(user=self.request.user)
+
+    def perform_create(self, serializer):
+        serializer.save(user=self.request.user)
