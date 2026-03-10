@@ -2,12 +2,11 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework import status
-from rest_framework import generics
 from django.db.models import Q
 from django.shortcuts import get_object_or_404
 
 
-from .models import Product, Category, Cart, CartItem, Order, OrderItem,Address
+from .models import Product, Category, Cart, CartItem, Order, OrderItem,Wishlist
 from .serializers import (
     RegisterSerializer,
     UserSerializer,
@@ -16,8 +15,7 @@ from .serializers import (
     CartSerializer,
     CartItemSerializer,
     OrderSerializer,
-     AddressSerializer
-
+    WishlistSerializer
 )
 
 
@@ -265,14 +263,43 @@ def cancel_order(request, order_id):
 
     return Response({"message": "Order cancelled successfully"})
 
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def add_to_wishlist(request):
+
+    print("Wishlist API called") 
+    user = request.user
+    product_id = request.data.get("product_id")
+
+    product = Product.objects.get(id=product_id)
+
+    Wishlist.objects.get_or_create(user=user, product=product)
+
+    return Response({"message": "Product added to wishlist"})
 
 
-class AddressListCreateView(generics.ListCreateAPIView):
-    serializer_class = AddressSerializer
-    permission_classes = [IsAuthenticated]
+# wishlist dekhne ke lie
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def get_wishlist(request):
+    
 
-    def get_queryset(self):
-        return Address.objects.filter(user=self.request.user)
+    wishlist = Wishlist.objects.filter(user=request.user)
 
-    def perform_create(self, serializer):
-        serializer.save(user=self.request.user)
+    serializer = WishlistSerializer(wishlist, many=True)
+
+    return Response(serializer.data)
+
+#wishlist  se delete krne ke lie
+
+@api_view(["DELETE"])
+@permission_classes([IsAuthenticated])
+def remove_from_wishlist(request, product_id):
+
+    Wishlist.objects.filter(
+        user=request.user,
+        product_id=product_id
+    ).delete()
+
+    return Response({"message": "Removed from wishlist"})
+

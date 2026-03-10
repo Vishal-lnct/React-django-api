@@ -60,7 +60,7 @@ function Signup() {
         {/* Heading */}
         <div className="text-center mb-6">
           <h2 className="text-3xl font-bold text-gray-800">
-            Create Account 🚀
+            Create Account 
           </h2>
           <p className="text-gray-500 text-sm mt-2">
             Join <span className="font-semibold">Vyntra</span> and start shopping

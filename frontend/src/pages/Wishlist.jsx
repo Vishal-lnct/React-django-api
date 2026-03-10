@@ -1,80 +1,107 @@
-import { useWishlist } from "../context/WishlistContext";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Wishlist() {
-  const { wishlistItems, removeFromWishlist } = useWishlist();
 
-  if (wishlistItems.length === 0) {
-    return (
-      <div className="pt-24 min-h-screen flex justify-center items-center bg-gray-100">
-        <h2 className="text-2xl font-semibold text-gray-600">
-          Your Wishlist is Empty ❤️
-        </h2>
-      </div>
-    );
-  }
+  const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
+  const [wishlist, setWishlist] = useState([]);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+
+    const token = localStorage.getItem("access_token");
+
+    // If user not logged in → redirect
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    fetch(`${BASEURL}/api/wishlist/`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    })
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Failed to fetch wishlist");
+        }
+        return res.json();
+      })
+      .then(data => {
+        console.log("Wishlist data:", data);
+        setWishlist(data);
+      })
+      .catch(err => console.error(err));
+
+  }, [BASEURL, navigate]);
+
+
+  const removeFromWishlist = async (productId) => {
+
+    const token = localStorage.getItem("access_token");
+
+    try {
+
+      await fetch(`${BASEURL}/api/wishlist/remove/${productId}/`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      // update UI instantly
+      setWishlist(
+        wishlist.filter(item => item.product.id !== productId)
+      );
+
+    } catch (error) {
+      console.error("Remove wishlist error:", error);
+    }
+  };
+
 
   return (
-    <div className="pt-24 min-h-screen bg-gray-100 px-6 py-10">
+    <div className="p-10">
 
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">
-        My Wishlist
+      <h1 className="text-3xl font-bold mb-6">
+        ❤️ My Wishlist
       </h1>
 
-      {/* PRODUCT GRID */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+      <div className="grid grid-cols-3 gap-6">
 
-        {wishlistItems.map((item) => (
+        {wishlist.length === 0 ? (
+          <p>No products in wishlist</p>
+        ) : (
+          wishlist.map((item) => (
 
-          <div
-            key={item.id}
-            className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 overflow-hidden"
-          >
+            <div key={item.id} className="border p-4 rounded-lg">
 
-            {/* IMAGE */}
-            <div className="h-48 w-full overflow-hidden">
               <img
-                src={item.image}
-                alt={item.name}
-                className="w-full h-full object-cover hover:scale-105 transition duration-300"
+                src={item.product.image}
+                alt={item.product.name}
+                className="h-40 object-cover"
               />
-            </div>
 
-            {/* PRODUCT INFO */}
-            <div className="p-4">
-
-              <h2 className="text-lg font-semibold text-gray-800">
-                {item.name}
+              <h2 className="text-lg font-semibold mt-2">
+                {item.product.name}
               </h2>
 
-              <p className="text-green-600 font-bold mt-1">
-                ₹{item.price}
+              <p className="text-green-600">
+                ₹{item.product.price}
               </p>
 
-              {/* ACTION BUTTONS */}
-              <div className="flex justify-between items-center mt-4">
-
-                <Link
-                  to={`/product/${item.id}`}
-                  className="text-blue-600 text-sm font-medium hover:underline"
-                >
-                  View
-                </Link>
-
-                <button
-                  onClick={() => removeFromWishlist(item.id)}
-                  className="text-red-500 text-sm font-medium hover:text-red-600"
-                >
-                  Remove
-                </button>
-
-              </div>
+              <button
+                onClick={() => removeFromWishlist(item.product.id)}
+                className="mt-3 bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600"
+              >
+                Remove
+              </button>
 
             </div>
 
-          </div>
-
-        ))}
+          ))
+        )}
 
       </div>
 

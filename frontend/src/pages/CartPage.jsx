@@ -2,109 +2,88 @@ import { useCart } from "../context/CartContext";
 import { Link } from "react-router-dom";
 
 function CartPage() {
-
   const { cartItems, total, removeFromCart, updateQuantity } = useCart();
+  const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
 
   console.log("Cart Items:", cartItems);
 
   return (
-    <div className="pt-24 min-h-screen bg-gray-100 px-6 py-8">
-
-      <h1 className="text-3xl font-bold mb-8 text-center">
-        🛒 Your Cart
-      </h1>
+    <div className="pt-20 min-h-screen bg-gray-100 p-8">
+      <h1 className="text-3xl font-bold mb-6 text-center">🛒 Your Cart</h1>
 
       {cartItems.length === 0 ? (
-
-        <p className="text-center text-gray-600">
-          Your cart is empty.
-        </p>
-
+        <p className="text-center text-gray-600">Your cart is empty.</p>
       ) : (
+        <div className="max-w-4xl mx-auto bg-white p-6 rounded-lg shadow-md">
+          
+          {cartItems.map((item) => {
 
-        <div className="max-w-4xl mx-auto bg-white p-6 rounded-xl shadow-md">
+            // Fix image URL
+            const imageUrl = item.product_image?.startsWith("http")
+              ? item.product_image
+              : `${BASEURL}${item.product_image}`;
 
-          {cartItems.map((item) => (
+            return (
+              <div
+                key={item.id}
+                className="flex items-center justify-between mb-4"
+              >
+                {/* Image + Product Info */}
+                <div className="flex items-center gap-4">
 
-            <div
-              key={item.id}
-              className="flex items-center justify-between py-4 border-b"
-            >
-
-              {/* PRODUCT LEFT SECTION */}
-              <div className="flex items-center gap-4">
-
-                {item.product_image && (
                   <img
-                    src={item.product_image}
+                    src={imageUrl}
                     alt={item.product_name}
-                    className="w-24 h-24 object-cover rounded-lg"
+                    className="w-20 h-20 object-cover rounded"
                   />
-                )}
 
-                <div>
+                  <div>
+                    <h2 className="text-lg font-semibold">
+                      {item.product_name}
+                    </h2>
 
-                  <h2 className="text-lg font-semibold">
-                    {item.product_name}
-                  </h2>
-
-                  <p className="text-gray-600">
-                    ${item.product_price}
-                  </p>
-
+                    <p className="text-gray-600">
+                      ${item.product_price}
+                    </p>
+                  </div>
                 </div>
 
+                {/* Quantity Controls */}
+                <div className="flex items-center gap-3">
+                  <button
+                    className="bg-gray-300 px-3 py-1 rounded"
+                    onClick={() =>
+                      updateQuantity(item.id, item.quantity - 1)
+                    }
+                  >
+                    -
+                  </button>
+
+                  <span>{item.quantity}</span>
+
+                  <button
+                    className="bg-gray-300 px-3 py-1 rounded"
+                    onClick={() =>
+                      updateQuantity(item.id, item.quantity + 1)
+                    }
+                  >
+                    +
+                  </button>
+
+                  <button
+                    className="text-red-500"
+                    onClick={() => removeFromCart(item.id)}
+                  >
+                    Remove
+                  </button>
+                </div>
               </div>
+            );
+          })}
 
-
-              {/* QUANTITY CONTROLS */}
-              <div className="flex items-center gap-3">
-
-                <button
-                  className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                  onClick={() =>
-                    updateQuantity(
-                      item.id,
-                      item.quantity > 1 ? item.quantity - 1 : 1
-                    )
-                  }
-                >
-                  -
-                </button>
-
-                <span className="font-medium">
-                  {item.quantity}
-                </span>
-
-                <button
-                  className="bg-gray-200 px-3 py-1 rounded hover:bg-gray-300"
-                  onClick={() =>
-                    updateQuantity(item.id, item.quantity + 1)
-                  }
-                >
-                  +
-                </button>
-
-                <button
-                  className="text-red-500 hover:text-red-600"
-                  onClick={() => removeFromCart(item.id)}
-                >
-                  Remove
-                </button>
-
-              </div>
-
-            </div>
-
-          ))}
-
-
-          {/* TOTAL SECTION */}
-          <div className="pt-6 mt-4 flex justify-between items-center">
-
-            <h2 className="text-xl font-bold">
-              Total:
-            </h2>
+          {/* Total */}
+          <div className="border-t pt-4 mt-4 flex justify-between items-center">
+            <h2 className="text-xl font-bold">Total:</h2>
 
             <p className="text-xl font-semibold">
               ${total.toFixed(2)}
@@ -112,17 +91,13 @@ function CartPage() {
 
             <Link
               to="/checkout"
-              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-300"
             >
               Proceed to Checkout
             </Link>
-
           </div>
-
         </div>
-
       )}
-
     </div>
   );
 }

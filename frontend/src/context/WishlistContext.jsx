@@ -1,37 +1,42 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
 
-  const [wishlistItems, setWishlistItems] = useState(() => {
-    const saved = localStorage.getItem("wishlist");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
+  const [wishlistCount, setWishlistCount] = useState(0);
 
-  useEffect(() => {
-    localStorage.setItem("wishlist", JSON.stringify(wishlistItems));
-  }, [wishlistItems]);
+  const fetchWishlist = async () => {
 
-  const addToWishlist = (product) => {
-    const exists = wishlistItems.find((item) => item.id === product.id);
+    const token = localStorage.getItem("access_token");
 
-    if (!exists) {
-      setWishlistItems([...wishlistItems, product]);
+    if (!token) return;
+
+    try {
+
+      const res = await fetch(`${BASEURL}/api/wishlist/`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+
+      const data = await res.json();
+
+      setWishlistCount(data.length);
+
+    } catch (error) {
+      console.error(error);
     }
   };
 
-  const removeFromWishlist = (id) => {
-    setWishlistItems(wishlistItems.filter((item) => item.id !== id));
-  };
-
-  const isInWishlist = (id) => {
-    return wishlistItems.some((item) => item.id === id);
-  };
+  useEffect(() => {
+    fetchWishlist();
+  }, []);
 
   return (
     <WishlistContext.Provider
-      value={{ wishlistItems, addToWishlist, removeFromWishlist, isInWishlist }}
+      value={{ wishlistCount, fetchWishlist }}
     >
       {children}
     </WishlistContext.Provider>

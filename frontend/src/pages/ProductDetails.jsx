@@ -1,22 +1,23 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useCart } from "../context/CartContext";
-import { useWishlist } from "../context/WishlistContext";
 
 function ProductDetails() {
+
   const { id } = useParams();
+  const navigate = useNavigate();
   const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
 
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isWishlisted, setIsWishlisted] = useState(false);
 
   const { addToCart } = useCart();
 
-  // Wishlist context
-  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
-
+  // Fetch product
   useEffect(() => {
+
     fetch(`${BASEURL}/api/products/${id}/`)
       .then((response) => {
         if (!response.ok) {
@@ -32,49 +33,111 @@ function ProductDetails() {
         setError(error.message);
         setLoading(false);
       });
+
   }, [id, BASEURL]);
 
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
-  if (error) {
-    return <div>Error: {error}</div>;
-  }
+  // Check if product already in wishlist
+  useEffect(() => {
 
-  if (!product) {
-    return <div>No product found</div>;
-  }
+    const token = localStorage.getItem("access_token");
+
+    if (!token) return;
+
+    fetch(`${BASEURL}/api/wishlist/`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => res.json())
+      .then(data => {
+
+        const exists = data.some(
+          item => item.product.id === Number(id)
+        );
+
+        setIsWishlisted(exists);
+
+      });
+
+  }, [id, BASEURL]);
+
+
+  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (error) return <div className="text-center mt-10 text-red-500">Error: {error}</div>;
+  if (!product) return <div className="text-center mt-10">No product found</div>;
+
 
   const handleAddToCart = () => {
-    if (!localStorage.getItem("access_token")) {
-      window.location.href = "/login";
+
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      navigate("/login");
       return;
     }
 
     addToCart(product.id);
   };
 
-  const handleWishlist = () => {
-    if (!localStorage.getItem("access_token")) {
-      window.location.href = "/login";
+
+  // Toggle Wishlist
+  const toggleWishlist = async () => {
+
+    const token = localStorage.getItem("access_token");
+
+    if (!token) {
+      navigate("/login");
       return;
     }
 
-    if (isInWishlist(product.id)) {
-      removeFromWishlist(product.id);
-    } else {
-      addToWishlist(product);
+    try {
+
+      if (isWishlisted) {
+
+        // REMOVE
+        await fetch(`${BASEURL}/api/wishlist/remove/${product.id}/`, {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+
+        setIsWishlisted(false);
+
+      } else {
+
+        // ADD
+        await fetch(`${BASEURL}/api/wishlist/add/`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            product_id: product.id
+          })
+        });
+
+        setIsWishlisted(true);
+      }
+
+    } catch (error) {
+      console.error("Wishlist toggle error:", error);
     }
+
   };
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex justify-center items-center py-10">
+
       <div className="bg-white shadow-lg rounded-2xl p-8 max-w-3xl w-full">
+
         <div className="flex flex-col md:flex-row gap-8">
 
           <img
-            src={`${product.image}`}
+            src={product.image}
             alt={product.name}
             className="w-full md:w-1/2 h-auto object-cover rounded-lg"
           />
@@ -93,7 +156,6 @@ function ProductDetails() {
               ₹{product.price}
             </p>
 
-            {/* Buttons */}
             <div className="flex gap-4">
 
               <button
@@ -104,33 +166,29 @@ function ProductDetails() {
               </button>
 
               <button
-                onClick={handleWishlist}
-                className={`px-6 py-2 rounded-lg transition ${
-                  isInWishlist(product.id)
-                    ? "bg-red-500 text-white"
-                    : "bg-gray-200 text-gray-800 hover:bg-gray-300"
-                }`}
+                onClick={toggleWishlist}
+                className="bg-pink-500 text-white px-6 py-2 rounded-lg hover:bg-pink-600 transition"
               >
-                {isInWishlist(product.id)
-                  ? "❤️ Remove Wishlist"
-                  : "🤍 Add to Wishlist"}
+                {isWishlisted ? "❤️ Wishlisted" : "🤍 Add to Wishlist"}
               </button>
 
             </div>
 
-            {/* Back Button */}
             <div className="mt-4">
-              <a
-                href="/"
+              <Link
+                to="/"
                 className="text-blue-600 hover:underline"
               >
-                &larr; Back to Home
-              </a>
+                ← Back to Home
+              </Link>
             </div>
 
           </div>
+
         </div>
+
       </div>
+
     </div>
   );
 }

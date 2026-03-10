@@ -2,7 +2,7 @@ from django.urls import path
 from . import views
 from .views import get_orders
 from .views import cancel_order
-from .views import AddressListCreateView
+from .views import add_to_wishlist, get_wishlist, remove_from_wishlist
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 urlpatterns = [
@@ -34,5 +34,11 @@ urlpatterns = [
 #my order me dikhane ke lie
     path('orders/', get_orders),
 
-      path('addresses/', AddressListCreateView.as_view()),
+
+    #wishlist me add ,delete aur dekhne ke lie
+
+    path("wishlist/add/", add_to_wishlist),
+path("wishlist/", get_wishlist),
+path("wishlist/remove/<int:product_id>/", remove_from_wishlist),
+
 ]

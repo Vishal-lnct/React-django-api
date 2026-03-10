@@ -6,9 +6,8 @@ from .models import (
     CartItem,
     Order,
     OrderItem,
-    Address
+    Wishlist
 )
-
 from django.contrib.auth.models import User
 
 
@@ -125,8 +124,10 @@ class OrderSerializer(serializers.ModelSerializer):
         model = Order
         fields = "__all__"
 
+class WishlistSerializer(serializers.ModelSerializer):
 
-class AddressSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
     class Meta:
-        model = Address
-        fields = '__all__'        
+        model = Wishlist
+        fields = "__all__"
