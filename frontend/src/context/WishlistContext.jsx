@@ -1,16 +1,18 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect, useState, useCallback } from "react";
 
 const WishlistContext = createContext();
 
 export const WishlistProvider = ({ children }) => {
 
   const BASEURL = import.meta.env.VITE_DJANGO_BASE_URL;
-  const [wishlistCount, setWishlistCount] = useState(0);
+  const [wishlistItems, setWishlistItems] = useState([]);
 
-  const fetchWishlist = async () => {
+  // ======================
+  // FETCH WISHLIST
+  // ======================
+  const fetchWishlist = useCallback(async () => {
 
     const token = localStorage.getItem("access_token");
-
     if (!token) return;
 
     try {
@@ -21,22 +23,34 @@ export const WishlistProvider = ({ children }) => {
         }
       });
 
+      if (!res.ok) {
+        throw new Error("Failed to fetch wishlist");
+      }
+
       const data = await res.json();
 
-      setWishlistCount(data.length);
+      setWishlistItems(data);
 
     } catch (error) {
-      console.error(error);
+      console.error("Wishlist fetch error:", error);
     }
-  };
 
+  }, [BASEURL]);
+
+  // ======================
+  // LOAD ON APP START
+  // ======================
   useEffect(() => {
     fetchWishlist();
-  }, []);
+  }, [fetchWishlist]);
 
   return (
     <WishlistContext.Provider
-      value={{ wishlistCount, fetchWishlist }}
+      value={{
+        wishlistItems,
+        setWishlistItems,
+        fetchWishlist
+      }}
     >
       {children}
     </WishlistContext.Provider>
